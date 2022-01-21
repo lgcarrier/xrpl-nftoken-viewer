@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  p The following NFTokens are available for sale.
+  div#viewer
+  script(type='text/javascript').
+    var temp = '!{JSON.stringify(nftokens)}';
+
+    var nftokens = JSON.parse(temp)
+
+    console.log(nftokens);
+
+    //- debugger;
+    for (const nft of nftokens) {
+        var nftokenImage = document.createElement('img');
+        nftokenImage.src = nft.convertedGatewayUrl;
+        var nftokenCard = document.createElement('div', {'id': nft.TokenID});
+        nftokenCard.id = nft.TokenID;
+        nftokenCard.append(nftokenImage);
+        nftokenCard.append('[BUY]');
+
+        document.getElementById('viewer').append(
+            nftokenCard
+        );
+    }
